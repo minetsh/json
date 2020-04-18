@@ -1,0 +1,77 @@
+.page {
+  display: block;
+  box-sizing: border-box;
+  position: relative;
+
+  &-header {
+    height: 50px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0 20px;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+
+    &__name {
+      color: #333333;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    &__wechat {
+      width: 20px;
+      height: 20px;
+      margin-left: 10px;
+      cursor: pointer;
+    }
+  }
+
+  &-json {
+    display: flex;
+    height: calc(100vh - 150px);
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+
+    &-source {
+      flex: 382;
+      position: relative;
+      align-self: stretch;
+
+      &__text {
+        width: 100%;
+        height: 100%;
+        border: none;
+        margin: 0;
+        font-size: 16px;
+        background: none;
+        padding: 10px;
+        color: #333333;
+        resize: none;
+        outline: none;
+        box-sizing: border-box;
+        font-family: Menlo, Monaco, 'Courier New', monospace;
+        border: 1px solid #f0f0f0;
+
+        &::focus {
+          border: none;
+          outline: red;
+          box-shadow: red;
+        }
+      }
+    }
+
+    &-render {
+      flex: 618;
+      align-self: stretch;
+      overflow-y: scroll;
+      padding: 10px;
+    }
+  }
+
+  &-footer {
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}

@@ -5,7 +5,7 @@ import './App.css';
 
 function App() {
   return (
-    <Router>
+    <Router basename="/json">
       <Route path="/" component={Home}></Route>
     </Router>
   );

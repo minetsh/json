@@ -1,5 +1,6 @@
 import JsonRender from './json-render';
 import { JsonType, JsonTypes, jsonType } from './json';
+import JsonFormatter from './json-formatter';
 
 export interface JsonElementProps<T extends JsonType = JsonType> {
   key?: string;
@@ -59,5 +60,24 @@ export default class JsonElement<T extends JsonType = JsonType> {
         break;
     }
     return render;
+  }
+
+  public format(): JsonFormatter {
+    const formatter = JsonFormatter.create().space(this.deepth).key(this.key);
+    switch (this.type) {
+      case JsonTypes.string:
+        formatter.string(this.value as any);
+        break;
+      case JsonTypes.number:
+        formatter.number(this.value as any);
+        break;
+      case JsonTypes.boolean:
+        formatter.boolean(this.value as any);
+        break;
+      case JsonTypes.null:
+        formatter.null(this.value as any);
+        break;
+    }
+    return formatter;
   }
 }

@@ -1,6 +1,7 @@
 import JsonRender from './json-render';
 import JsonElement, { JsonElementProps } from './json-element';
 import { JsonType, toJsonElement } from './json';
+import JsonFormatter from './json-formatter';
 
 export interface JsonObjectProps<T extends object>
   extends JsonElementProps<T> {}
@@ -33,5 +34,22 @@ export default class JsonObject<T extends object> extends JsonElement<T> {
       });
     }
     return render.br().space(this.deepth).append('}');
+  }
+
+  public format(): JsonFormatter {
+    const formatter = JsonFormatter.create()
+      .space(this.deepth)
+      .key(this.key)
+      .append('{')
+      .br();
+    if (!this.isEmpty) {
+      this.children.forEach((child, index) => {
+        if (index > 0) {
+          formatter.append(',').br();
+        }
+        formatter.sub(child.format());
+      });
+    }
+    return formatter.br().space(this.deepth).append('}');
   }
 }

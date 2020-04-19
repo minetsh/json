@@ -1,6 +1,7 @@
 import JsonElement from './json-element';
 import JsonObject from './json-object';
 import JsonArray from './json-array';
+import JsonRender from './json-render';
 
 export type JsonType =
   | boolean
@@ -69,12 +70,20 @@ export function renderJsonElement(
   return toJsonElement(value, key, deepth).render();
 }
 
-export function renderJson(json?: string) {
+export function renderJson(json?: string): JsonRender | undefined {
   try {
     if (json || json === null) {
       return renderJsonElement(JSON.parse(json));
     }
   } catch (e) {
     return renderJsonElement(`${e}`);
+  }
+}
+
+export function formatJson(json?: string): string | undefined {
+  if (json || json === null) {
+    const element = toJsonElement(JSON.parse(json));
+    const formatter = element.format();
+    return formatter.format();
   }
 }

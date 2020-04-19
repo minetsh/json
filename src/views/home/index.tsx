@@ -3,14 +3,30 @@ import JsonView from '../../components/json-view';
 import Pop from '../../components/pop';
 import wechat from '../../images/icon24_appwx_logo.png';
 import wx from '../../images/wechat.jpeg';
+import { formatJson } from '../../core/json';
 import './index.scss';
 
 export default function JsonToolPage() {
-  const [json, setJson] = useState('');
+  const [json, setJson] = useState<string>();
   const [pop, setPop] = useState(false);
+  const [error, setError] = useState<string>();
 
   const onInput = (e: any) => {
     setJson(e.target.value);
+  };
+
+  const onSourceFormat = (e: any) => {
+    const {
+      target: {
+        dataset: { json: text },
+      },
+    } = e;
+    try {
+      setJson(formatJson(text));
+      setError(undefined);
+    } catch (e) {
+      setError(`${e}`);
+    }
   };
 
   return (
@@ -26,9 +42,24 @@ export default function JsonToolPage() {
       </header>
       <div className="page-json">
         <div className="page-json-source">
+          <div className="page-json-source-operations">
+            <span
+              className="page-json-source-operations__format"
+              data-json={json}
+              onClick={onSourceFormat}
+            >
+              格式化
+            </span>
+            {error && (
+              <span className="page-json-source-operations__error">
+                {error}
+              </span>
+            )}
+          </div>
           <textarea
             className="page-json-source__text"
             placeholder="请输入 JSON 字符串"
+            value={json}
             onChange={onInput}
           />
         </div>
